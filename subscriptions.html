@@ -228,6 +228,30 @@
     </div>
   </div>
 
-  <a href="../index.html" class="back-link">⬅️ الرجوع إلى الصفحة الرئيسية</a>
+  <script>
+    // إظهار زر مختلف إذا أتى المستخدم من صفحة login.html
+    document.addEventListener("DOMContentLoaded", function() {
+      const ref = document.referrer;
+      const fromLogin = ref.includes("login.html");
+      const container = document.createElement("div");
+      container.style.marginTop = "50px";
+      if (fromLogin) {
+        // زر العودة لتسجيل الدخول
+        const btn = document.createElement("a");
+        btn.href = "login.html";
+        btn.className = "back-link";
+        btn.textContent = "⬅️ الرجوع إلى صفحة تسجيل الدخول";
+        container.appendChild(btn);
+      } else {
+        // زر العودة للصفحة الرئيسية
+        const btn = document.createElement("a");
+        btn.href = "../index.html";
+        btn.className = "back-link";
+        btn.textContent = "⬅️ الرجوع إلى الصفحة الرئيسية";
+        container.appendChild(btn);
+      }
+      document.body.appendChild(container);
+    });
+  </script>
 </body>
 </html>
