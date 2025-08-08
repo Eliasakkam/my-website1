@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
+  </div><meta charset="UTF-8" />
   <title>غياب الطلاب</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -232,16 +232,50 @@
     
     <p>قائمة الطلاب الغائبين وعدد الأيام الغياب وحالة العذر.</p>
 
+    <div style="text-align:center; margin-bottom:18px;">
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="ابحث باسم الطالب..."
+        style="padding:8px 12px; border-radius:6px; border:none; font-family:'Cairo',sans-serif; font-size:1em; background:rgba(255,255,255,0.1); color:white; min-width:180px;"
+        oninput="filterTable()" />
+    </div>
     <form class="add-form" id="addAbsenceForm" onsubmit="addAbsence(event)">
       <input type="text" id="studentName" placeholder="اسم الطالب" required />
       <select id="studentClass" required>
-        <option value="">اختر الصف</option>
-        <option value="أول ثانوي">أول ثانوي</option>
-        <option value="ثاني ثانوي">ثاني ثانوي</option>
-        <option value="ثالث ثانوي">ثالث ثانوي</option>
+      <option value="">اختر الصف</option>
+      <option value="أول ثانوي">أول ثانوي</option>
+      <option value="ثاني ثانوي">ثاني ثانوي</option>
+      <option value="ثالث ثانوي">ثالث ثانوي</option>
       </select>
       <input type="number" id="absenceDays" placeholder="عدد أيام الغياب" min="1" required />
       <button type="submit" class="back-btn">إضافة</button>
+    </form>
+    <script>
+    function filterTable() {
+      const input = document.getElementById("searchInput");
+      const filter = input.value.trim();
+      const table = document.getElementById("absenceTable");
+      const trs = table.querySelectorAll("tbody tr");
+      let currentGroup = null;
+      trs.forEach(tr => {
+        if (tr.classList.contains("group-row")) {
+          currentGroup = tr;
+          tr.style.display = "";
+          return;
+        }
+        const nameTd = tr.querySelector("td");
+        if (!nameTd) return;
+        const name = nameTd.textContent || nameTd.innerText;
+        if (filter === "" || name.includes(filter)) {
+          tr.style.display = "";
+          if (currentGroup) currentGroup.style.display = "";
+        } else {
+          tr.style.display = "none";
+        }
+      });
+    }
+    </script>
     </form>
 
     <div class="table-wrapper">
